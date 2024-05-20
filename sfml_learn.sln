@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml_learn", "sfml_learn\sfml_learn.vcxproj", "{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Debug|x64.ActiveCfg = Debug|x64
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Debug|x64.Build.0 = Debug|x64
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Debug|x86.ActiveCfg = Debug|Win32
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Debug|x86.Build.0 = Debug|Win32
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Release|x64.ActiveCfg = Release|x64
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Release|x64.Build.0 = Release|x64
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Release|x86.ActiveCfg = Release|Win32
+		{D624D35E-6AFC-4A7B-9BAB-051FE6457C77}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {922AC9F5-02C2-4AAC-8D18-CC2CCE504FA2}
+	EndGlobalSection
+EndGlobal
