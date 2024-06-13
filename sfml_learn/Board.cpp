@@ -1,17 +1,71 @@
 #include "Board.hpp"
 #include <iostream>
 
+Board::Board(int Iwidth, int Iheight, int IcellSize, sf::RenderWindow* Itarget){
+	target = Itarget;
+	width = Iwidth;
+	height = Iheight;
+	cellSize = IcellSize;
+	std::vector<Cell> row;
+	
+	// create board
+	for (int i = 0; i < width; i += cellSize)
+	{
+		for (int j = 0; j < height; j += cellSize)
+		{
+			sf::RectangleShape rect(sf::Vector2f(cellSize, cellSize));
+			rect.setPosition(sf::Vector2f(i, j));
+			rect.setOutlineThickness(1);
+			rect.setOutlineColor(sf::Color::Black);
+			Cell cell(rect, i, j, Type::Default);
+			row.push_back(cell);
+		}
+		BoardArray.push_back(row);
+		row.clear();
+	}
+}
+
+void Board::ColorBoard(sf::Event& event)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
+
+	if (event.type == sf::Event::KeyPressed)
+	{
+		switch (event.key.scancode)
+		{
+		case sf::Keyboard::Scan::W:
+			Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
+			break;
+		case sf::Keyboard::Scan::A:
+			Mark(sf::Mouse::getPosition(*target), Board::Type::StartNode);
+			break;
+		case sf::Keyboard::Scan::D:
+			Mark(sf::Mouse::getPosition(*target), Board::Type::EndNode);
+			break;
+		case sf::Keyboard::Scan::S:
+			Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
+			break;
+		case sf::Keyboard::Scan::R:
+			Clear();
+			break;
+		}
+	}
+}
 
 void Board::Mark(sf::Vector2<int> point, Type type)
 {
-	std::cout << "marked: " << point.x << " " << point.y << " " << type <<std::endl;
 	point.x = point.x / 20;
 	point.y = point.y / 20;
-	
+
 	if (point.x < 0 || point.y < 0)
 		return;
 	if (point.x >= width / cellSize || point.y >= height / cellSize)
 		return;
+
+	std::cout << "marked: " << point.x << " " << point.y << " " << type << std::endl;
 
 	if (type == Type::StartNode)
 	{
@@ -32,29 +86,7 @@ void Board::Mark(sf::Vector2<int> point, Type type)
 	BoardArray[point.x][point.y].ChangeCellType(type);
 }
 
-Board::Board(int Iwidth, int Iheight, int IcellSize, sf::RenderWindow* Itarget){
-	target = Itarget;
-	width = Iwidth;
-	height = Iheight;
-	cellSize = IcellSize;
-	std::vector<Cell> row;
-	
-	for (int i = 0; i < width; i += cellSize)
-	{
-		for (int j = 0; j < height; j += cellSize)
-		{
-			sf::RectangleShape rect(sf::Vector2f(cellSize, cellSize));
-			rect.setPosition(sf::Vector2f(i, j));
-			rect.setOutlineThickness(1);
-			rect.setOutlineColor(sf::Color::Black);
-			Cell cell(rect, i, j, Type::Default);
-			row.push_back(cell);
-		}
-		BoardArray.push_back(row);
-		row.clear();
-	}
-}
-
+// render board run this every frame
 void Board::Draw()
 {
 	for (int i = 0, s = BoardArray.size(); i < s; i++)
@@ -64,6 +96,12 @@ void Board::Draw()
 			target->draw(BoardArray[i][j].rect);
 		}
 	}
+}
+
+void Board::Clear() {
+	for (auto& row : BoardArray)
+		for (Cell& cell : row)
+			cell.ChangeCellType(Board::Default);
 }
 
 void Cell::Cell::ChangeCellType(Board::Type type)
@@ -82,33 +120,5 @@ void Cell::Cell::ChangeCellType(Board::Type type)
 	case Board::Type::EndNode:
 		rect.setFillColor(sf::Color::Red);
 		break;
-	}
-}
-
-void Board::ColorBoard(sf::Event& event)
-{
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-		Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
-
-	// coloring board
-	if (event.type == sf::Event::KeyPressed)
-	{
-		switch (event.key.scancode)
-		{
-		case sf::Keyboard::Scan::W:
-			Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
-			break;
-		case sf::Keyboard::Scan::A:
-			Mark(sf::Mouse::getPosition(*target), Board::Type::StartNode);
-			break;
-		case sf::Keyboard::Scan::D:
-			Mark(sf::Mouse::getPosition(*target), Board::Type::EndNode);
-			break;
-		case sf::Keyboard::Scan::S:
-			Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
-			break;
-		}
 	}
 }

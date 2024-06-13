@@ -20,6 +20,8 @@ class Board {
 	Cell *startNode;
 	Cell *endNode;
 
+	void Clear();
+
 public:
 	enum Type { Default, Wall, StartNode, EndNode, Path };
 
@@ -28,7 +30,6 @@ public:
 	void Draw();
 	void ColorBoard(sf::Event&);
 };
-
 
 
 struct Cell {
