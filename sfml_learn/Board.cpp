@@ -51,6 +51,9 @@ void Board::ColorBoard(sf::Event& event)
 		case sf::Keyboard::Scan::R:
 			Clear();
 			break;
+		case sf::Keyboard::Scan::F:
+			// find path
+			break;
 		}
 	}
 }

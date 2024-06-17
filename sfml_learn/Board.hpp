@@ -36,7 +36,11 @@ struct Cell {
 	sf::RectangleShape rect;
 	int x;
 	int y;
+	Cell* parent;
+	int costToTarget = 0;
+	int costFromStart = INFINITY;
+	int totalCost = INFINITY;
 	Board::Type type;
-	Cell(sf::RectangleShape Irect, int Ix, int Iy, Board::Type Itype) : rect(Irect), x(Ix), y(Iy), type(Itype) { ChangeCellType(type); };
 	void ChangeCellType(Board::Type);
+	Cell(sf::RectangleShape Irect, int Ix, int Iy, Board::Type Itype) : rect(Irect), x(Ix), y(Iy), type(Itype) { ChangeCellType(type); };
 };
