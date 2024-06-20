@@ -3,6 +3,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
+#include <iostream>
 
 struct Cell;
 
@@ -32,15 +33,20 @@ public:
 };
 
 
+// building block of board
 struct Cell {
 	sf::RectangleShape rect;
 	int x;
 	int y;
-	Cell* parent;
+	int size = 1;
+	Board::Type type;
+	Cell(sf::RectangleShape Irect, int Ix, int Iy, Board::Type Itype) : rect(Irect), x(Ix), y(Iy), type(Itype) { ChangeCellType(type); };
+
+	// pathfinder members
+	Cell* parent = nullptr;
 	int costToTarget = 0;
 	int costFromStart = INFINITY;
-	int totalCost = INFINITY;
-	Board::Type type;
 	void ChangeCellType(Board::Type);
-	Cell(sf::RectangleShape Irect, int Ix, int Iy, Board::Type Itype) : rect(Irect), x(Ix), y(Iy), type(Itype) { ChangeCellType(type); };
+	void CalculateDistance(Cell);
+	std::vector<Cell*> GetNeighbours();
 };

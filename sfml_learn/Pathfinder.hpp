@@ -4,9 +4,11 @@
 class Pathfinder {
 	std::vector<Cell*> openSet;
 	std::vector<Cell*> closedSet;
-public:
-	Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* IBoardArray);
-	Cell* ExtractMin();
-	int calculateDistance();
+	Cell* startNode;
+	Cell* endNode;
+	std::vector<std::vector<Cell>>* BoardArray;
 
+public:
+	Pathfinder(Cell* IstartNode, Cell* IendNode);
+	Cell* ExtractMin();
 };

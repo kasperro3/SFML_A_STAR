@@ -24,6 +24,9 @@
     <ClCompile Include="Pathfinder.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pathfinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.hpp">

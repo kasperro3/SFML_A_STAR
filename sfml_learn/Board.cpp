@@ -25,6 +25,7 @@ Board::Board(int Iwidth, int Iheight, int IcellSize, sf::RenderWindow* Itarget){
 	}
 }
 
+// on keyboard action update board
 void Board::ColorBoard(sf::Event& event)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -92,11 +93,11 @@ void Board::Mark(sf::Vector2<int> point, Type type)
 // render board run this every frame
 void Board::Draw()
 {
-	for (int i = 0, s = BoardArray.size(); i < s; i++)
+	for (auto& row : BoardArray)
 	{
-		for (int j = 0, z = BoardArray[i].size(); j < z; j++)
+		for (Cell& cell : row)
 		{
-			target->draw(BoardArray[i][j].rect);
+			target->draw(cell.rect);
 		}
 	}
 }
@@ -107,9 +108,11 @@ void Board::Clear() {
 			cell.ChangeCellType(Board::Default);
 }
 
-void Cell::Cell::ChangeCellType(Board::Type type)
+// coloring
+void Cell::ChangeCellType(Board::Type Itype)
 {
-	switch (type)
+	type = Itype;
+	switch (Itype)
 	{
 	case Board::Type::Default:
 		rect.setFillColor(sf::Color(217, 217, 217));
@@ -124,4 +127,20 @@ void Cell::Cell::ChangeCellType(Board::Type type)
 		rect.setFillColor(sf::Color::Red);
 		break;
 	}
+}
+
+void Cell::CalculateDistance(Cell endNode)
+{
+	// distance calculated diagonally
+	double dx = abs(x - endNode.x);
+	double dy = abs(y - endNode.y);
+
+	costToTarget = costFromStart + size * (dx + dy) + (std::sqrt(size) - 2 * size) * std::min(dx, dy);
+}
+
+std::vector<Cell*> Cell::GetNeighbours()
+{
+	std::vector<Cell*> neighbours;
+
+	return neighbours;
 }

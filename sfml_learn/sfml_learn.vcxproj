@@ -141,6 +141,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\dependencies\SFML-2.6.1\include</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\dependencies\SFML-2.6.1\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="Pathfinder.hpp" />
   </ItemGroup>
   <ItemGroup>
