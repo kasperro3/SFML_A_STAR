@@ -94,15 +94,12 @@ void Board::Mark(sf::Vector2<int> point, Type type)
 void Board::Draw()
 {
 	for (auto& row : BoardArray)
-	{
 		for (Cell& cell : row)
-		{
 			target->draw(cell.rect);
-		}
-	}
 }
 
-void Board::Clear() {
+void Board::Clear() 
+{
 	for (auto& row : BoardArray)
 		for (Cell& cell : row)
 			cell.ChangeCellType(Board::Default);
@@ -137,11 +134,8 @@ void Cell::ChangeCellType(Board::Type Itype)
 
 void Cell::CalculateDistance(Cell endNode)
 {
-	// distance calculated diagonally
-	double dx = abs(x - endNode.x);
-	double dy = abs(y - endNode.y);
-
-	costToTarget = costFromStart + size * (dx + dy) + (std::sqrt(size) - 2 * size) * std::min(dx, dy);
+	// euclidean distance
+	costToTarget = sqrt(pow(endNode.x - x, 2) + pow(endNode.y - y, 2));
 }
 
 std::vector<Cell*> Cell::GetNeighbours(std::vector<std::vector<Cell>>& board)

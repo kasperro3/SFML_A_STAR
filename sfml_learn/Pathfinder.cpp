@@ -17,7 +17,7 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector
 		if (current == endNode)
 		{
 			std::cout << "Found path" << std::endl;
-			return;
+			break;
 		}
 
 		std::vector<Cell*> neighbours = current->GetNeighbours(*board);
@@ -33,8 +33,9 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector
 			}
 		}
 		closedSet.push_back(current);
-		DrawPath();
 	}
+
+	DrawPath();
 }
 
 Cell* Pathfinder::ExtractMin()
@@ -62,5 +63,6 @@ void Pathfinder::DrawPath()
 	{
 		closedSet.back()->ChangeCellType(Board::Type::Path);
 		closedSet.push_back(closedSet.back()->parent);
+		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
 }
