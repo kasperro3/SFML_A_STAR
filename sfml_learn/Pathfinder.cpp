@@ -3,7 +3,7 @@
 #include <thread>
 #include <chrono>
 
-Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode), endNode(IendNode)
+Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard) : startNode(IstartNode), endNode(IendNode), board(Iboard)
 {
 	Cell* current;
 	startNode->costFromStart = 0;
@@ -13,22 +13,27 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode)
 	{
 		// grab closest cell
 		current = ExtractMin();
-		for (Cell* cell : current->GetNeighbours())
+
+		if (current == endNode)
 		{
-			if (cell == startNode)
-			{
-				std::cout << "Found path" << std::endl;
-				return;
-			}
-			openSet.push_back(cell);
-			cell->parent = current;
-			cell->costFromStart = cell->parent->costToTarget;
-			cell->CalculateDistance(*endNode);
-			std::cout << "Pathing..." << std::endl;
+			std::cout << "Found path" << std::endl;
+			return;
 		}
-		current->ChangeCellType(Board::Path);
+
+		std::vector<Cell*> neighbours = current->GetNeighbours(*board);
+		for (Cell* cell : neighbours)
+		{
+			cell->CalculateDistance(*endNode);
+			if (cell->costToTarget < current->costToTarget)
+			{
+				cell->parent = current;
+				cell->costFromStart = current->costFromStart + 1;
+				cell->CalculateDistance(*endNode);
+				openSet.push_back(cell);
+			}
+		}
 		closedSet.push_back(current);
-		std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(100));
+		DrawPath();
 	}
 }
 
@@ -49,4 +54,13 @@ Cell* Pathfinder::ExtractMin()
 	
 	openSet.erase(openSet.begin() + minIndex);
 	return minCell;
+}
+
+void Pathfinder::DrawPath()
+{
+	while(closedSet.back() != startNode)
+	{
+		closedSet.back()->ChangeCellType(Board::Type::Path);
+		closedSet.push_back(closedSet.back()->parent);
+	}
 }

@@ -5,6 +5,9 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+#define BOARD_WIDTH 600
+#define BOARD_HEIGHT 600
+
 struct Cell;
 
 class Board {
@@ -12,12 +15,10 @@ class Board {
 	int width;
 	int height;
 	int cellSize;
-	std::vector<std::vector<Cell>> BoardArray;
 	
 	// rendering window
 	sf::RenderWindow* target;
 
-	void Clear();
 
 public:
 	enum Type { Default, Wall, StartNode, EndNode, Path };
@@ -26,9 +27,11 @@ public:
 	Cell* startNode;
 	Cell* endNode;
 
+	std::vector<std::vector<Cell>> BoardArray;
 	Board(int, int, int, sf::RenderWindow*);
 	void Mark(sf::Vector2<int>, Type);
 	void Draw();
+	void Clear();
 	void ColorBoard(sf::Event&);
 };
 
@@ -48,5 +51,5 @@ struct Cell {
 	int costFromStart = INFINITY;
 	void ChangeCellType(Board::Type);
 	void CalculateDistance(Cell);
-	std::vector<Cell*> GetNeighbours();
+	std::vector<Cell*> GetNeighbours(std::vector<std::vector<Cell>>&);
 };

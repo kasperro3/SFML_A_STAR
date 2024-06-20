@@ -106,6 +106,9 @@ void Board::Clear() {
 	for (auto& row : BoardArray)
 		for (Cell& cell : row)
 			cell.ChangeCellType(Board::Default);
+
+	startNode = nullptr;
+	endNode = nullptr;
 }
 
 // coloring
@@ -141,9 +144,26 @@ void Cell::CalculateDistance(Cell endNode)
 	costToTarget = costFromStart + size * (dx + dy) + (std::sqrt(size) - 2 * size) * std::min(dx, dy);
 }
 
-std::vector<Cell*> Cell::GetNeighbours()
+std::vector<Cell*> Cell::GetNeighbours(std::vector<std::vector<Cell>>& board)
 {
 	std::vector<Cell*> neighbours;
+
+	for(int i = x / 20 - 1; i <= x / 20 + 1; i++)
+	{
+		for(int j = y / 20 - 1; j <= y / 20 + 1; j++)
+		{
+			if(i < 0 || j < 0)
+				continue;
+			if(i == x && j == y)
+				continue;
+			if(i > BOARD_WIDTH / 20 || j > BOARD_HEIGHT / 20)
+				continue;
+			if(board[i][j].type == Board::Type::Wall)
+				continue;
+
+			neighbours.push_back(&board[i][j]);
+		}
+	}
 
 	return neighbours;
 }
