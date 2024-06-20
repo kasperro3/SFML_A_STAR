@@ -1,4 +1,7 @@
 #include "Pathfinder.hpp"
+#include <limits>
+#include <thread>
+#include <chrono>
 
 Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode), endNode(IendNode)
 {
@@ -21,15 +24,17 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode)
 			cell->parent = current;
 			cell->costFromStart = cell->parent->costToTarget;
 			cell->CalculateDistance(*endNode);
+			std::cout << "Pathing..." << std::endl;
 		}
 		current->ChangeCellType(Board::Path);
 		closedSet.push_back(current);
+		std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(100));
 	}
 }
 
 Cell* Pathfinder::ExtractMin()
 {
-	int min = INFINITY;
+	int min = std::numeric_limits<int>::max();
 	int minIndex = 0;
 	Cell* minCell = nullptr;
 	for (int i = 0, n = openSet.size(); i < n; i++)
@@ -41,7 +46,7 @@ Cell* Pathfinder::ExtractMin()
 			min = minCell->costToTarget;
 		}
 	}
-
+	
 	openSet.erase(openSet.begin() + minIndex);
 	return minCell;
 }

@@ -58,12 +58,14 @@ void Board::ColorBoard(sf::Event& event)
 
 void Board::Mark(sf::Vector2<int> point, Type type)
 {
-	point.x = point.x / 20;
-	point.y = point.y / 20;
+	point.x = point.x / cellSize;
+	point.y = point.y / cellSize;
 
 	if (point.x < 0 || point.y < 0)
 		return;
 	if (point.x >= width / cellSize || point.y >= height / cellSize)
+		return;
+	if (BoardArray[point.x][point.y].type == Type::StartNode || BoardArray[point.x][point.y].type == Type::EndNode)
 		return;
 
 	std::cout << "marked: " << point.x << " " << point.y << " " << type << std::endl;
@@ -84,6 +86,7 @@ void Board::Mark(sf::Vector2<int> point, Type type)
 		}
 		endNode = &BoardArray[point.x][point.y];
 	}
+
 	BoardArray[point.x][point.y].ChangeCellType(type);
 }
 
@@ -122,6 +125,9 @@ void Cell::ChangeCellType(Board::Type Itype)
 		break;
 	case Board::Type::EndNode:
 		rect.setFillColor(sf::Color::Red);
+		break;
+	case Board::Type::Path:
+		rect.setFillColor(sf::Color::Blue);
 		break;
 	}
 }
