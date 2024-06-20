@@ -4,6 +4,7 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode)
 {
 	Cell* current;
 	startNode->costFromStart = 0;
+	startNode->CalculateDistance(*endNode);
 	openSet.push_back(startNode);
 	while (!openSet.empty())
 	{
@@ -21,12 +22,15 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode) : startNode(IstartNode)
 			cell->costFromStart = cell->parent->costToTarget;
 			cell->CalculateDistance(*endNode);
 		}
+		current->ChangeCellType(Board::Path);
+		closedSet.push_back(current);
 	}
 }
 
 Cell* Pathfinder::ExtractMin()
 {
-	int min = INFINITY, minIndex;
+	int min = INFINITY;
+	int minIndex = 0;
 	Cell* minCell = nullptr;
 	for (int i = 0, n = openSet.size(); i < n; i++)
 	{

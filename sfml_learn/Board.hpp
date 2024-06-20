@@ -17,14 +17,14 @@ class Board {
 	// rendering window
 	sf::RenderWindow* target;
 
-	// pathfinder variables
-	Cell *startNode;
-	Cell *endNode;
-
 	void Clear();
 
 public:
 	enum Type { Default, Wall, StartNode, EndNode, Path };
+
+	// pathfinder variables
+	Cell* startNode;
+	Cell* endNode;
 
 	Board(int, int, int, sf::RenderWindow*);
 	void Mark(sf::Vector2<int>, Type);
@@ -44,7 +44,7 @@ struct Cell {
 
 	// pathfinder members
 	Cell* parent = nullptr;
-	int costToTarget = 0;
+	int costToTarget = INFINITY;
 	int costFromStart = INFINITY;
 	void ChangeCellType(Board::Type);
 	void CalculateDistance(Cell);

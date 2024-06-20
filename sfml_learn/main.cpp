@@ -1,4 +1,3 @@
-#include "Board.hpp"
 #include "Pathfinder.hpp"
 #include <iostream>
 
@@ -15,6 +14,18 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            // this can't be in board unfortunatelly
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::F)
+                {
+                    if (b.startNode && b.endNode)
+                        Pathfinder p(b.startNode, b.endNode);
+                    else
+                        std::cout << "No start or end node" << std::endl;
+                }
+            }
 
             b.ColorBoard(event);
         }
