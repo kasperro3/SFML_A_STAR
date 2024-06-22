@@ -15,6 +15,7 @@ class Board {
 	int width;
 	int height;
 	int cellSize;
+	bool locked;
 	
 public:
 	enum Type { Default, Wall, StartNode, EndNode, Path };
@@ -32,6 +33,7 @@ public:
 	void Draw();
 	void Clear();
 	void ColorBoard(sf::Event&);
+	void Lock();
 };
 
 

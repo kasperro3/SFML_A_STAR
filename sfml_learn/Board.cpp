@@ -28,6 +28,8 @@ Board::Board(int Iwidth, int Iheight, int IcellSize, sf::RenderWindow* Itarget){
 // on keyboard action update board
 void Board::ColorBoard(sf::Event& event)
 {
+	if (locked)
+		return;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -49,7 +51,7 @@ void Board::ColorBoard(sf::Event& event)
 		case sf::Keyboard::Scan::S:
 			Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
 			break;
-			// it causes a lot of problems, no time to fix
+		// it causes a lot of problems, no time to fix
 		//case sf::Keyboard::Scan::R:
 		//	Clear();
 		//	break;
@@ -107,6 +109,11 @@ void Board::Clear()
 
 	startNode = nullptr;
 	endNode = nullptr;
+}
+
+void Board::Lock()
+{
+	locked = true;
 }
 
 // coloring
