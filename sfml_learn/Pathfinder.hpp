@@ -12,4 +12,5 @@ public:
 	Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard);
 	Cell* ExtractMin();
 	void DrawPath();
+	bool IsDiagonal(Cell* current, Cell* cell);
 };

@@ -39,16 +39,17 @@ public:
 // building block of board
 struct Cell {
 	sf::RectangleShape rect;
-	int x;
-	int y;
+	float x;
+	float y;
 	int size = 1;
 	Board::Type type;
 	Cell(sf::RectangleShape Irect, int Ix, int Iy, Board::Type Itype) : rect(Irect), x(Ix), y(Iy), type(Itype) { ChangeCellType(type); };
 
 	// pathfinder members
 	Cell* parent = nullptr;
-	int costToTarget = INFINITY;
-	int costFromStart = INFINITY;
+	float costToTarget = INFINITY;
+	float costFromStart = INFINITY;
+	int depth = 0;
 	void ChangeCellType(Board::Type);
 	void CalculateDistance(Cell);
 	std::vector<Cell*> GetNeighbours(std::vector<std::vector<Cell>>&);

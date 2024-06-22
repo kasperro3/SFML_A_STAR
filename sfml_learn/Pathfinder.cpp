@@ -13,34 +13,41 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector
 	{
 		// grab closest cell
 		current = ExtractMin();
-
 		if (current == endNode)
 		{
-			std::cout << "Found path" << std::endl;
-			break;
+			std::cout<<"Found path"<<std::endl;
+			DrawPath();
+			return;
 		}
 
-		std::vector<Cell*> neighbours = current->GetNeighbours(*board);
-		for (Cell* cell : neighbours)
+		float tentativeCost;
+
+		for(Cell * cell : current->GetNeighbours(*board))
 		{
-			cell->CalculateDistance(*endNode);
-			if (cell->costToTarget < current->costToTarget)
+			if(IsDiagonal(current, cell))
+				tentativeCost = current->costFromStart + 1.4;
+			else
+				tentativeCost = current->costFromStart + 1;
+
+			if(tentativeCost < cell->costFromStart)
 			{
 				cell->parent = current;
-				cell->costFromStart = current->costFromStart + 1;
+				cell->costFromStart = tentativeCost;
 				cell->CalculateDistance(*endNode);
-				openSet.push_back(cell);
+				if(std::find(openSet.begin(), openSet.end(), cell) == openSet.end())
+				{
+					openSet.push_back(cell);
+				}
 			}
-		}
+		}	
 		closedSet.push_back(current);
 	}
-
-	DrawPath();
+	std::cout <<"No path found"<<std::endl;
 }
 
 Cell* Pathfinder::ExtractMin()
 {
-	int min = std::numeric_limits<int>::max();
+	float min = std::numeric_limits<float>::max();
 	int minIndex = 0;
 	Cell* minCell = nullptr;
 	for (int i = 0, n = openSet.size(); i < n; i++)
@@ -59,10 +66,18 @@ Cell* Pathfinder::ExtractMin()
 
 void Pathfinder::DrawPath()
 {
-	while(closedSet.back() != startNode)
-	{
-		closedSet.back()->ChangeCellType(Board::Type::Path);
-		closedSet.push_back(closedSet.back()->parent);
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	}
+    Cell* current = endNode->parent;
+    while (current != startNode)
+    {
+        current->ChangeCellType(Board::Type::Path);
+        current = current->parent;
+    }
 }
+
+bool Pathfinder::IsDiagonal(Cell* current, Cell* cell)
+{
+	if(current->x != cell->x && current->y != cell->y)
+		return true;
+	return false;
+}
+

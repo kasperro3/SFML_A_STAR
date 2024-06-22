@@ -135,7 +135,7 @@ void Cell::ChangeCellType(Board::Type Itype)
 void Cell::CalculateDistance(Cell endNode)
 {
 	// euclidean distance
-	costToTarget = sqrt(pow(endNode.x - x, 2) + pow(endNode.y - y, 2));
+	costToTarget = sqrt(pow(x - endNode.x, 2) + pow(y - endNode.y, 2)) + costFromStart;
 }
 
 std::vector<Cell*> Cell::GetNeighbours(std::vector<std::vector<Cell>>& board)
@@ -148,9 +148,9 @@ std::vector<Cell*> Cell::GetNeighbours(std::vector<std::vector<Cell>>& board)
 		{
 			if(i < 0 || j < 0)
 				continue;
-			if(i == x && j == y)
+			if(i == x / 20 && j == y / 20)
 				continue;
-			if(i > BOARD_WIDTH / 20 || j > BOARD_HEIGHT / 20)
+			if(i >= BOARD_WIDTH / 20 || j >= BOARD_HEIGHT / 20)
 				continue;
 			if(board[i][j].type == Board::Type::Wall)
 				continue;
@@ -158,6 +158,5 @@ std::vector<Cell*> Cell::GetNeighbours(std::vector<std::vector<Cell>>& board)
 			neighbours.push_back(&board[i][j]);
 		}
 	}
-
 	return neighbours;
 }
