@@ -3,7 +3,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 900), "A* Algorithm Visualization", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(600, 600), "A* Algorithm Visualization", sf::Style::Close);
     Board b(600, 600, 20, &window);
 
     // game loop

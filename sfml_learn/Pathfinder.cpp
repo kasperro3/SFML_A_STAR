@@ -34,10 +34,9 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector
 				cell->parent = current;
 				cell->costFromStart = tentativeCost;
 				cell->CalculateDistance(*endNode);
+
 				if(std::find(openSet.begin(), openSet.end(), cell) == openSet.end())
-				{
 					openSet.push_back(cell);
-				}
 			}
 		}	
 		closedSet.push_back(current);
