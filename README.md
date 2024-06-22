@@ -6,8 +6,8 @@ It is a final project for Programming Languages II classes at AGH.
 # Keybindings
 LEFT MOUSE BUTTON/W - mark an obstacle (Wall)\
 RIGHT MOUSE BUTTON/S - eraser\
-A - mark start node\
-D - mark end node\
+D - mark start node\
+A - mark end node\
 R - reset board (DISABLED for now)\
 F - find path
 
