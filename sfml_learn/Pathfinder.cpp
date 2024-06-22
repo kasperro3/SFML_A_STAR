@@ -3,7 +3,7 @@
 #include <thread>
 #include <chrono>
 
-Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard) : startNode(IstartNode), endNode(IendNode), board(Iboard)
+Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard, Board& b) : startNode(IstartNode), endNode(IendNode), board(Iboard), b(b)
 {
 	Cell* current;
 	startNode->costFromStart = 0;
@@ -69,7 +69,10 @@ void Pathfinder::DrawPath()
     while (current != startNode)
     {
         current->ChangeCellType(Board::Type::Path);
-        current = current->parent;
+		b.target->draw(current->rect);
+		b.target->display();
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		current = current->parent;
     }
 }
 

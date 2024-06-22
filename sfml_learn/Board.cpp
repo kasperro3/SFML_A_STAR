@@ -122,10 +122,10 @@ void Cell::ChangeCellType(Board::Type Itype)
 		rect.setFillColor(sf::Color::Black);
 		break;
 	case Board::Type::StartNode:
-		rect.setFillColor(sf::Color::Green);
+		rect.setFillColor(sf::Color::Red);
 		break;
 	case Board::Type::EndNode:
-		rect.setFillColor(sf::Color::Red);
+		rect.setFillColor(sf::Color::Green);
 		break;
 	case Board::Type::Path:
 		rect.setFillColor(sf::Color::Blue);

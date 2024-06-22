@@ -21,7 +21,7 @@ int main()
                 if (event.key.code == sf::Keyboard::F)
                 {
                     if (b.startNode && b.endNode)
-                        Pathfinder p(b.startNode, b.endNode, &b.BoardArray);
+                        Pathfinder p(b.startNode, b.endNode, &b.BoardArray, b);
                     else
                         std::cout << "No start or end node" << std::endl;
                 }

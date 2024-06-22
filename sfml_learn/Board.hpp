@@ -16,12 +16,10 @@ class Board {
 	int height;
 	int cellSize;
 	
-	// rendering window
-	sf::RenderWindow* target;
-
-
 public:
 	enum Type { Default, Wall, StartNode, EndNode, Path };
+	// rendering window
+	sf::RenderWindow* target;
 
 	// pathfinder variables
 	Cell* startNode;
