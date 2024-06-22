@@ -10,6 +10,7 @@ class Pathfinder {
 
 public:
 	Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard);
+	~Pathfinder() { openSet.clear(); closedSet.clear(); };
 	Cell* ExtractMin();
 	void DrawPath();
 	bool IsDiagonal(Cell* current, Cell* cell);

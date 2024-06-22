@@ -29,6 +29,7 @@ public:
 
 	std::vector<std::vector<Cell>> BoardArray;
 	Board(int, int, int, sf::RenderWindow*);
+	~Board(){};
 	void Mark(sf::Vector2<int>, Type);
 	void Draw();
 	void Clear();

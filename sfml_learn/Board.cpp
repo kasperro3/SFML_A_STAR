@@ -49,6 +49,7 @@ void Board::ColorBoard(sf::Event& event)
 		case sf::Keyboard::Scan::S:
 			Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
 			break;
+			// it causes a lot of problems, no time to fix
 		case sf::Keyboard::Scan::R:
 			Clear();
 			break;
