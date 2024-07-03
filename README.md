@@ -8,8 +8,8 @@ LEFT MOUSE BUTTON/W - mark an obstacle (Wall)\
 RIGHT MOUSE BUTTON/S - eraser\
 D - mark start node\
 A - mark end node\
-R - reset board (DISABLED for now)\
+R - reset board \
 F - find path
 
 # Known bugs
-- reseting the board leads to weird paths or "no path found" (reseting the board not available)
+- path sticks to walls
