@@ -34,6 +34,8 @@ public:
 	void Clear();
 	void ColorBoard(sf::Event&);
 	void Lock();
+	void Unlock();
+	void ClearPath();
 };
 
 

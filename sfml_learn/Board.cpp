@@ -28,8 +28,6 @@ Board::Board(int Iwidth, int Iheight, int IcellSize, sf::RenderWindow* Itarget){
 // on keyboard action update board
 void Board::ColorBoard(sf::Event& event)
 {
-	if (locked)
-		return;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		Mark(sf::Mouse::getPosition(*target), Board::Type::Wall);
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -52,15 +50,18 @@ void Board::ColorBoard(sf::Event& event)
 			Mark(sf::Mouse::getPosition(*target), Board::Type::Default);
 			break;
 		// it causes a lot of problems, no time to fix
-		//case sf::Keyboard::Scan::R:
-		//	Clear();
-		//	break;
+		case sf::Keyboard::Scan::R:
+			Unlock();
+			Clear();
+			break;
 		}
 	}
 }
 
 void Board::Mark(sf::Vector2<int> point, Type type)
 {
+	if (locked)
+		return;
 	point.x = point.x / cellSize;
 	point.y = point.y / cellSize;
 
@@ -105,7 +106,12 @@ void Board::Clear()
 {
 	for (auto& row : BoardArray)
 		for (Cell& cell : row)
+		{
 			cell.ChangeCellType(Board::Default);
+			cell.parent = nullptr;
+			cell.costToTarget = INFINITY;
+			cell.costFromStart = INFINITY;
+		}
 
 	startNode = nullptr;
 	endNode = nullptr;
@@ -115,6 +121,12 @@ void Board::Lock()
 {
 	locked = true;
 }
+
+void Board::Unlock()
+{
+	locked = false;
+}
+
 
 // coloring
 void Cell::ChangeCellType(Board::Type Itype)

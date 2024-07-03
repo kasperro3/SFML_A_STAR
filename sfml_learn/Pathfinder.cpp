@@ -3,7 +3,9 @@
 #include <thread>
 #include <chrono>
 
-Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector<Cell>>* Iboard, Board& b) : startNode(IstartNode), endNode(IendNode), board(Iboard), b(b)
+Pathfinder::Pathfinder(std::vector<std::vector<Cell>>* Iboard, Board& b) : board(Iboard), b(b) {}
+
+void Pathfinder::FindPath(Cell* startNode, Cell* endNode)
 {
 	Cell* current;
 	startNode->costFromStart = 0;
@@ -15,33 +17,36 @@ Pathfinder::Pathfinder(Cell* IstartNode, Cell* IendNode, std::vector<std::vector
 		current = ExtractMin();
 		if (current == endNode)
 		{
-			std::cout<<"Found path"<<std::endl;
-			DrawPath();
+			std::cout << "Found path" << std::endl;
+			DrawPath(startNode, endNode);
 			return;
 		}
 
 		float tentativeCost;
 
-		for(Cell * cell : current->GetNeighbours(*board))
+		for (Cell* cell : current->GetNeighbours(*board))
 		{
-			if(IsDiagonal(current, cell))
-				tentativeCost = current->costFromStart + 1.4;
+			if (IsDiagonal(current, cell))
+				tentativeCost = current->costFromStart + 1.41;
 			else
 				tentativeCost = current->costFromStart + 1;
 
-			if(tentativeCost < cell->costFromStart)
+			if (tentativeCost < cell->costFromStart)
 			{
 				cell->parent = current;
 				cell->costFromStart = tentativeCost;
 				cell->CalculateDistance(*endNode);
 
-				if(std::find(openSet.begin(), openSet.end(), cell) == openSet.end())
+				if (std::find(openSet.begin(), openSet.end(), cell) == openSet.end())
 					openSet.push_back(cell);
 			}
-		}	
+		}
 		closedSet.push_back(current);
 	}
-	std::cout <<"No path found"<<std::endl;
+	DrawPath(startNode, endNode);
+
+	openSet.clear();
+	closedSet.clear();
 }
 
 Cell* Pathfinder::ExtractMin()
@@ -63,7 +68,7 @@ Cell* Pathfinder::ExtractMin()
 	return minCell;
 }
 
-void Pathfinder::DrawPath()
+void Pathfinder::DrawPath(Cell *startNode, Cell* endNode)
 {
     Cell* current = endNode->parent;
     while (current != startNode)

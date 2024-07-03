@@ -5,6 +5,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "A* Algorithm Visualization", sf::Style::Close);
     Board b(600, 600, 20, &window);
+    Pathfinder p(&b.BoardArray, b);
 
     // game loop
     while (window.isOpen())
@@ -22,7 +23,7 @@ int main()
                 {
                     if (b.startNode && b.endNode)
                     {
-                        Pathfinder p(b.startNode, b.endNode, &b.BoardArray, b);
+    		    		p.FindPath(b.startNode, b.endNode);
                         b.Lock();
                     }
                     else
