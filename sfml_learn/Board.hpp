@@ -55,5 +55,5 @@ struct Cell {
 	int depth = 0;
 	void ChangeCellType(Board::Type);
 	void CalculateDistance(Cell);
-	std::vector<Cell*> GetNeighbours(std::vector<std::vector<Cell>>&);
+	std::vector<Cell*> GetNeighbours(std::vector<std::vector<Cell>>&) const;
 };

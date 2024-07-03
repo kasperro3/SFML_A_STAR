@@ -34,7 +34,7 @@ void Pathfinder::FindPath(Cell* startNode, Cell* endNode)
 			if (tentativeCost < cell->costFromStart)
 			{
 				cell->parent = current;
-				cell->costFromStart = tentativeCost;
+				cell->costFromStart = tentativeCost + cell->parent->costFromStart;
 				cell->CalculateDistance(*endNode);
 
 				if (std::find(openSet.begin(), openSet.end(), cell) == openSet.end())
@@ -71,6 +71,7 @@ Cell* Pathfinder::ExtractMin()
 void Pathfinder::DrawPath(Cell *startNode, Cell* endNode)
 {
     Cell* current = endNode->parent;
+	std::cout << "Cost: " << endNode->costToTarget << std::endl;
     while (current != startNode)
     {
         current->ChangeCellType(Board::Type::Path);
